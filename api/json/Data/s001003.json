@@ -1,0 +1,74 @@
+{
+    "header": [
+        {
+            "row": "1",
+            "iterate": 1,
+            "field": [
+                {
+                    "name": "คณะ",
+                    "rowspan": "2",
+                    "colspan": "1"
+                },
+                {
+                    "name": "สาขาวิชา",
+                    "rowspan": "2",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ประกาศนียบัตรบัณฑิต",
+                    "rowspan": "1",
+                    "colspan": "4"
+                },
+                {
+                    "name": "ปริญญาโท",
+                    "rowspan": "1",
+                    "colspan": "4"
+                },
+                {
+                    "name": "ประกาศนียบัตรบัณฑิตชั้นสูง",
+                    "rowspan": "1",
+                    "colspan": "4"
+                },
+                {
+                    "name": "ปริญญาเอก",
+                    "rowspan": "1",
+                    "colspan": "4"
+                },
+                {
+                    "name": "รวมทั้งหมด",
+                    "rowspan": "2",
+                    "colspan": "1"
+                }
+            ]
+        },
+        {
+            "row": "2",
+            "iterate": 4,
+            "field": [
+                {
+                    "name": "มีสถานภาพ",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "พ้นสภาพ",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "สำเร็จการศึกษา",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "รวม",
+                    "rowspan": "1",
+                    "colspan": "1"
+                }
+            ]
+        }
+    ],
+    "query": "SELECT CONCAT( faculty_id, ' : ', TRIM(IF(faculty_id = 99,'',faculty_prefix_th)), TRIM(faculty_name_th) ) faculty, CONCAT( major_id, ': ',TRIM( major_name_th )) major, c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17 FROM tbl_major RIGHT JOIN (SELECT faculty_id, level_id, major_id, COUNT( CASE WHEN ( status = 'current') AND level_id = 2 THEN 1 END ) c1, COUNT( CASE WHEN ( status = 'out') AND level_id = 2 THEN 1 END ) c2, COUNT( CASE WHEN ( status = 'grad') AND level_id = 2 THEN 1 END ) c3, COUNT( CASE WHEN level_id = 2 THEN 1 END ) c4, COUNT( CASE WHEN ( status = 'current') AND level_id = 3 THEN 1 END ) c5, COUNT( CASE WHEN ( status = 'out') AND level_id = 3 THEN 1 END ) c6, COUNT( CASE WHEN ( status = 'grad') AND level_id = 3 THEN 1 END ) c7, COUNT( CASE WHEN level_id = 3 THEN 1 END ) c8, COUNT( CASE WHEN ( status = 'current') AND level_id = 4 THEN 1 END ) c9, COUNT( CASE WHEN ( status = 'out') AND level_id = 4 THEN 1 END ) c10, COUNT( CASE WHEN ( status = 'grad') AND level_id = 4 THEN 1 END ) c11, COUNT( CASE WHEN level_id = 4 THEN 1 END ) c12, COUNT( CASE WHEN ( status = 'current') AND level_id = 5 THEN 1 END ) c13, COUNT( CASE WHEN ( status = 'out') AND level_id = 5 THEN 1 END ) c14, COUNT( CASE WHEN ( status = 'grad') AND level_id = 5 THEN 1 END ) c15, COUNT( CASE WHEN level_id = 5 THEN 1 END ) c16, COUNT(student_id) c17 FROM ( SELECT student_id, 'current' status,faculty_id, level_id, major_id, student_type_id, type_exam_id,year_admit FROM tbl_student UNION ALL SELECT student_id, 'grad' status,faculty_id, level_id, major_id, student_type_id, type_exam_id,year_admit FROM tbl_student_grad UNION ALL SELECT student_id, 'out' status,faculty_id, level_id, major_id, student_type_id, type_exam_id,year_admit FROM tbl_student_out ) tbl_student WHERE level_id > 1 AND faculty_id LIKE ? AND LEFT(student_id,2) LIKE ? AND  student_type_id != 2 AND  IFNULL(type_exam_id, 'x') NOT IN ('12997', '12998', '12999')   GROUP BY faculty_id,level_id,major_id ) main USING(faculty_id,level_id,major_id) LEFT JOIN (SELECT * FROM tbl_faculty WHERE faculty_id != 96) tbl_faculty  USING(faculty_id) WHERE level_id > 1 AND faculty_id LIKE ? ORDER BY faculty_id,level_id,major_id",
+    "past": "N",
+    "order": "faf"
+}

@@ -1,0 +1,89 @@
+{
+    "header": [
+        {
+            "row": "1",
+            "iterate": 1,
+            "field": [
+                {
+                    "name": "คณะ",
+                    "rowspan": "2",
+                    "colspan": "1"
+                },
+                {
+                    "name": "สาขาวิชา",
+                    "rowspan": "2",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ปีที่นักศึกษาเข้าศึกษา (รหัส)",
+                    "rowspan": "1",
+                    "colspan": "11"
+                }
+            ]
+        },
+        {
+            "row": "2",
+            "iterate": 1,
+            "field": [
+                {
+                    "name": "{{y}}-9",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "{{y}}-8",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "{{y}}-7",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "{{y}}-6",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "{{y}}-5",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "{{y}}-4",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "{{y}}-3",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "{{y}}-2",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "{{y}}-1",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "{{y}}",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "รวม",
+                    "rowspan": "1",
+                    "colspan": "1"
+                }
+            ]
+        }
+    ],
+    "query": "SELECT CONCAT( faculty_id, ' : ', TRIM( IF(faculty_id = 99,'',faculty_prefix_th) ), TRIM( faculty_name_th )) AS faculty, CONCAT( major_id, ': ', TRIM( major_name_th )) AS major, c1, c2, c3, c4, c5, c6, c7,c8,c9,c10,c11 FROM tbl_major RIGHT JOIN ( SELECT faculty_id, major_id, level_id, COUNT(CASE WHEN level_id > 1 AND CONCAT('25',LEFT(student_id,2)) = (SELECT year FROM app_semester LIMIT 1)-9 then 1 ELSE NULL END) c1, COUNT(CASE WHEN level_id > 1 AND CONCAT('25',LEFT(student_id,2)) = (SELECT year FROM app_semester LIMIT 1)-8 then 1 ELSE NULL END) c2, COUNT(CASE WHEN level_id > 1 AND CONCAT('25',LEFT(student_id,2)) = (SELECT year FROM app_semester LIMIT 1)-7 then 1 ELSE NULL END) c3, COUNT(CASE WHEN level_id > 1 AND CONCAT('25',LEFT(student_id,2)) = (SELECT year FROM app_semester LIMIT 1)-6 then 1 ELSE NULL END) c4, COUNT(CASE WHEN level_id > 1 AND CONCAT('25',LEFT(student_id,2)) = (SELECT year FROM app_semester LIMIT 1)-5 then 1 ELSE NULL END) c5, COUNT(CASE WHEN level_id > 1 AND CONCAT('25',LEFT(student_id,2)) = (SELECT year FROM app_semester LIMIT 1)-4 then 1 ELSE NULL END) c6, COUNT(CASE WHEN level_id > 1 AND CONCAT('25',LEFT(student_id,2)) = (SELECT year FROM app_semester LIMIT 1)-3 then 1 ELSE NULL END) c7, COUNT(CASE WHEN level_id > 1 AND CONCAT('25',LEFT(student_id,2)) = (SELECT year FROM app_semester LIMIT 1)-2 then 1 ELSE NULL END) c8, COUNT(CASE WHEN level_id > 1 AND CONCAT('25',LEFT(student_id,2)) = (SELECT year FROM app_semester LIMIT 1)-1 then 1 ELSE NULL END) c9, COUNT(CASE WHEN level_id > 1 AND CONCAT('25',LEFT(student_id,2)) = (SELECT year FROM app_semester LIMIT 1) then 1 ELSE NULL END) c10, COUNT( student_id ) c11 FROM tbl_student WHERE level_id > 1 AND  student_type_id != 2 AND  IFNULL(type_exam_id, 'x') NOT IN ('12997', '12998', '12999')   AND faculty_id LIKE ? GROUP BY faculty_id, major_id, level_id ) main USING ( faculty_id, major_id, level_id ) LEFT JOIN (SELECT * FROM tbl_faculty WHERE faculty_id != 96) tbl_faculty  USING ( faculty_id ) WHERE level_id > 1 AND faculty_id LIKE ? ORDER BY faculty_id, major_id, level_id",
+    "past": "N",
+    "order": "ff"
+}

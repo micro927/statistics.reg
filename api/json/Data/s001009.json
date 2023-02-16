@@ -1,0 +1,95 @@
+{
+    "header": [
+        {
+            "row": "1",
+            "iterate": 1,
+            "field": [
+                {
+                    "name": "คณะ",
+                    "rowspan": "3",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ต่ำกว่าปริญญาตรี",
+                    "rowspan": "1",
+                    "colspan": "9"
+                },
+                {
+                    "name": "ปริญญาตรี",
+                    "rowspan": "1",
+                    "colspan": "9"
+                },
+                {
+                    "name": "ประกาศนียบัตรบัณฑิต",
+                    "rowspan": "1",
+                    "colspan": "9"
+                },
+                {
+                    "name": "ปริญญาโท",
+                    "rowspan": "1",
+                    "colspan": "9"
+                },
+                {
+                    "name": "ประกาศนียบัตรบัณฑิตชั้นสูง",
+                    "rowspan": "1",
+                    "colspan": "9"
+                },
+                {
+                    "name": "ปริญญาเอก",
+                    "rowspan": "1",
+                    "colspan": "9"
+                },
+                {
+                    "name": "รวมทั้งหมด",
+                    "rowspan": "2",
+                    "colspan": "3"
+                }
+            ]
+        },
+        {
+            "row": "2",
+            "iterate": 6,
+            "field": [
+                {
+                    "name": "ภาคปกติ",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "ภาคพิเศษ",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "นานาชาติ",
+                    "rowspan": "1",
+                    "colspan": "3"
+                }
+            ]
+        },
+        {
+            "row": "3",
+            "iterate": 19,
+            "field": [
+                {
+                    "name": "ชาย",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "หญิง",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "รวม",
+                    "rowspan": "1",
+                    "colspan": "1"
+                }
+            ]
+        }
+    ],
+    "query": "SELECT CONCAT(faculty_id,' : ',TRIM(IF(faculty_id = 99,'',faculty_prefix_th)),TRIM(faculty_name_th)) as faculty, COUNT( CASE WHEN (level_id = 0 AND MID(student_id, 6, 1) < 2 AND sex_id = 1) THEN 1 END) c1, COUNT( CASE WHEN (level_id = 0 AND MID(student_id, 6, 1) < 2 AND sex_id = 2) THEN 1 END) c2, COUNT( CASE WHEN (level_id = 0 AND MID(student_id, 6, 1) < 2) THEN 1 END) c3, COUNT( CASE WHEN (level_id = 0 AND MID(student_id, 6, 1) = 2 AND sex_id = 1) THEN 1 END) c4, COUNT( CASE WHEN (level_id = 0 AND MID(student_id, 6, 1) = 2 AND sex_id = 2) THEN 1 END) c5, COUNT( CASE WHEN (level_id = 0 AND MID(student_id, 6, 1) = 2) THEN 1 END) c6, COUNT( CASE WHEN (level_id = 0 AND MID(student_id, 6, 1) = 5 AND sex_id = 1) THEN 1 END) c7, COUNT( CASE WHEN (level_id = 0 AND MID(student_id, 6, 1) = 5 AND sex_id = 2) THEN 1 END) c8, COUNT( CASE WHEN (level_id = 0 AND MID(student_id, 6, 1) = 5) THEN 1 END) c9, COUNT( CASE WHEN (level_id = 1 AND (MID(student_id, 6, 1) < 2 OR MID(student_id, 6, 1) = 6) AND sex_id = 1) THEN 1 END) c10, COUNT( CASE WHEN (level_id = 1 AND (MID(student_id, 6, 1) < 2 OR MID(student_id, 6, 1) = 6) AND sex_id = 2) THEN 1 END) c11, COUNT( CASE WHEN (level_id = 1 AND (MID(student_id, 6, 1) < 2 OR MID(student_id, 6, 1) = 6)) THEN 1 END) c12, COUNT( CASE WHEN (level_id = 1 AND MID(student_id, 6, 1) = 2 AND sex_id = 1) THEN 1 END) c13, COUNT( CASE WHEN (level_id = 1 AND MID(student_id, 6, 1) = 2 AND sex_id = 2) THEN 1 END) c14, COUNT( CASE WHEN (level_id = 1 AND MID(student_id, 6, 1) = 2) THEN 1 END) c15, COUNT( CASE WHEN (level_id = 1 AND MID(student_id, 6, 1) = 5 AND sex_id = 1) THEN 1 END) c16, COUNT( CASE WHEN (level_id = 1 AND MID(student_id, 6, 1) = 5 AND sex_id = 2) THEN 1 END) c17, COUNT( CASE WHEN (level_id = 1 AND MID(student_id, 6, 1) = 5) THEN 1 END) c18, COUNT( CASE WHEN (level_id = 2 AND MID(student_id, 6, 1) < 2 AND sex_id = 1) THEN 1 END) c19, COUNT( CASE WHEN (level_id = 2 AND MID(student_id, 6, 1) < 2 AND sex_id = 2) THEN 1 END) c20, COUNT( CASE WHEN (level_id = 2 AND MID(student_id, 6, 1) < 2) THEN 1 END) c21, COUNT( CASE WHEN (level_id = 2 AND MID(student_id, 6, 1) = 2 AND sex_id = 1) THEN 1 END) c22, COUNT( CASE WHEN (level_id = 2 AND MID(student_id, 6, 1) = 2 AND sex_id = 2) THEN 1 END) c23, COUNT( CASE WHEN (level_id = 2 AND MID(student_id, 6, 1) = 2) THEN 1 END) c24, COUNT( CASE WHEN (level_id = 2 AND (MID(student_id, 6, 1) = 5 OR MID(student_id, 6, 1) = 7) AND sex_id = 1) THEN 1 END) c25, COUNT( CASE WHEN (level_id = 2 AND (MID(student_id, 6, 1) = 5 OR MID(student_id, 6, 1) = 7) AND sex_id = 2) THEN 1 END) c26, COUNT( CASE WHEN (level_id = 2 AND (MID(student_id, 6, 1) = 5 OR MID(student_id, 6, 1) = 7) ) THEN 1 END) c27, COUNT( CASE WHEN (level_id = 3 AND MID(student_id, 6, 1) < 2 AND sex_id = 1) THEN 1 END) c28, COUNT( CASE WHEN (level_id = 3 AND MID(student_id, 6, 1) < 2 AND sex_id = 2) THEN 1 END) c29, COUNT( CASE WHEN (level_id = 3 AND MID(student_id, 6, 1) < 2) THEN 1 END) c30, COUNT( CASE WHEN (level_id = 3 AND MID(student_id, 6, 1) = 2 AND sex_id = 1) THEN 1 END) c31, COUNT( CASE WHEN (level_id = 3 AND MID(student_id, 6, 1) = 2 AND sex_id = 2) THEN 1 END) c32, COUNT( CASE WHEN (level_id = 3 AND MID(student_id, 6, 1) = 2) THEN 1 END) c33, COUNT( CASE WHEN (level_id = 3 AND (MID(student_id, 6, 1) = 5 OR MID(student_id, 6, 1) = 7) AND sex_id = 1) THEN 1 END) c34, COUNT( CASE WHEN (level_id = 3 AND (MID(student_id, 6, 1) = 5 OR MID(student_id, 6, 1) = 7) AND sex_id = 2) THEN 1 END) c35, COUNT( CASE WHEN (level_id = 3 AND (MID(student_id, 6, 1) = 5 OR MID(student_id, 6, 1) = 7) ) THEN 1 END) c36, COUNT( CASE WHEN (level_id = 4 AND MID(student_id, 6, 1) < 2 AND sex_id = 1) THEN 1 END) c37, COUNT( CASE WHEN (level_id = 4 AND MID(student_id, 6, 1) < 2 AND sex_id = 2) THEN 1 END) c38, COUNT( CASE WHEN (level_id = 4 AND MID(student_id, 6, 1) < 2) THEN 1 END) c39, COUNT( CASE WHEN (level_id = 4 AND MID(student_id, 6, 1) = 2 AND sex_id = 1) THEN 1 END) c40, COUNT( CASE WHEN (level_id = 4 AND MID(student_id, 6, 1) = 2 AND sex_id = 2) THEN 1 END) c41, COUNT( CASE WHEN (level_id = 4 AND MID(student_id, 6, 1) = 2) THEN 1 END) c42, COUNT( CASE WHEN (level_id = 4 AND (MID(student_id, 6, 1) = 5 OR MID(student_id, 6, 1) = 7) AND sex_id = 1) THEN 1 END) c43, COUNT( CASE WHEN (level_id = 4 AND (MID(student_id, 6, 1) = 5 OR MID(student_id, 6, 1) = 7) AND sex_id = 2) THEN 1 END) c44, COUNT( CASE WHEN (level_id = 4 AND (MID(student_id, 6, 1) = 5 OR MID(student_id, 6, 1) = 7) ) THEN 1 END) c45, COUNT( CASE WHEN (level_id = 5 AND MID(student_id, 6, 1) < 2 AND sex_id = 1) THEN 1 END) c46, COUNT( CASE WHEN (level_id = 5 AND MID(student_id, 6, 1) < 2 AND sex_id = 2) THEN 1 END) c47, COUNT( CASE WHEN (level_id = 5 AND MID(student_id, 6, 1) < 2) THEN 1 END) c48, COUNT( CASE WHEN (level_id = 5 AND MID(student_id, 6, 1) = 2 AND sex_id = 1) THEN 1 END) c49, COUNT( CASE WHEN (level_id = 5 AND MID(student_id, 6, 1) = 2 AND sex_id = 2) THEN 1 END) c50, COUNT( CASE WHEN (level_id = 5 AND MID(student_id, 6, 1) = 2) THEN 1 END) c51, COUNT( CASE WHEN (level_id = 5 AND (MID(student_id, 6, 1) = 5 OR MID(student_id, 6, 1) = 7) AND sex_id = 1) THEN 1 END) c52, COUNT( CASE WHEN (level_id = 5 AND (MID(student_id, 6, 1) = 5 OR MID(student_id, 6, 1) = 7) AND sex_id = 2) THEN 1 END) c53, COUNT( CASE WHEN (level_id = 5 AND (MID(student_id, 6, 1) = 5 OR MID(student_id, 6, 1) = 7) ) THEN 1 END) c54, COUNT( CASE WHEN (sex_id = 1) THEN 1 END) c55, COUNT( CASE WHEN (sex_id = 2) THEN 1 END) c56, COUNT(student_id) c57 FROM tbl_student JOIN (SELECT * FROM tbl_faculty WHERE faculty_id != 96) tbl_faculty  USING(faculty_id) WHERE LEFT(student_id,2) LIKE ? AND  student_type_id != 2 AND  IFNULL(type_exam_id, 'x') NOT IN ('12997', '12998', '12999')   AND nationality_id != 'TH' AND nationality_id != 'XX' AND nationality_id != 'XY' AND nationality_id != 'XZ' AND nationality_id != 'ZZ' GROUP BY faculty_id",
+    "past": "N",
+    "order": "a"
+}

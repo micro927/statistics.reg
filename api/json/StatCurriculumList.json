@@ -1,0 +1,14 @@
+{
+  "TypeTitle": "สถิติข้อมูลหลักสูตร",
+  "TypeTitleShort": "ข้อมูลหลักสูตร",
+  "TypeMenu": [
+    {
+      "MenuId": "c000",
+      "MenuTitle": "สถิติข้อมูลหลักสูตร",
+      "MenuTitleShort": "ข้อมูลหลักสูตร",
+      "MenuDesc": "ข้อมูลสถิติหลักสูตรที่เปิดสอนในมหาวิทยาลัยเชียงใหม่ แบ่งออกเป็นแต่ละหัวข้อดังนี้",
+      "MenuIcon": "layout-text-window",
+      "Statistics": []
+    }
+  ]
+}

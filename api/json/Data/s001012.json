@@ -1,0 +1,58 @@
+{
+    "header": [
+        {
+            "row": "1",
+            "iterate": 1,
+            "field": [
+                {
+                    "name": "รหัสสัญชาติ",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "สัญชาติ",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ต่ำกว่าปริญญาตรี",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ปริญญาตรี",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ป.บัณฑิต",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ปริญญาโท",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ป.บัณฑิตชั้นสูง",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ปริญญาเอก",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "รวมทั้งหมด",
+                    "rowspan": "1",
+                    "colspan": "1"
+                }
+            ]
+        }
+    ],
+    "query": "SELECT IFNULL(nationality_id, '--') nationality_id_for_check, IF( nationality_name_th IS NOT NULL, CONCAT( TRIM(nationality_name_th), IF( nationality_name_en IS NOT NULL, CONCAT(' (', TRIM(nationality_name_en), ')'), '' ) ), 'ไม่มีข้อมูล' ) nationality_th, COUNT( CASE WHEN (level_id = 0) THEN 1 END ) c1, COUNT( CASE WHEN (level_id = 1) THEN 1 END ) c2, COUNT( CASE WHEN (level_id = 2) THEN 1 END ) c3, COUNT( CASE WHEN (level_id = 3) THEN 1 END ) c4, COUNT( CASE WHEN (level_id = 4) THEN 1 END ) c5, COUNT( CASE WHEN (level_id = 5) THEN 1 END ) c6, COUNT(*) c7 FROM tbl_student LEFT JOIN tbl_nationality USING(nationality_id) WHERE LEFT(student_id, 2) LIKE ? AND student_type_id != 2 AND IFNULL(type_exam_id, 'x') NOT IN ('12997', '12998', '12999') GROUP BY nationality_id HAVING nationality_id_for_check != 'TH'",
+    "past": "N",
+    "order": "a"
+}

@@ -1,0 +1,74 @@
+{
+    "header": [
+        {
+            "row": "1",
+            "iterate": 1,
+            "field": [
+                {
+                    "name": "คณะ",
+                    "rowspan": "3",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ต่ำกว่าปริญญาตรี",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "ปริญญาตรี",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "ประกาศนียบัตรบัณฑิต",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "ปริญญาโท",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "ประกาศนียบัตรบัณฑิตชั้นสูง",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "ปริญญาเอก",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "รวมทั้งหมด",
+                    "rowspan": "2",
+                    "colspan": "3"
+                }
+            ]
+        },
+        {
+            "row": "2",
+            "iterate": 6,
+            "field": [
+                {
+                    "name": "กระบวนวิชา",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "เพื่อใช้บริการฯ",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "รวม",
+                    "rowspan": "1",
+                    "colspan": "1"
+                }
+            ]
+        }
+    ],
+    "query": "SELECT CONCAT( faculty_id, ' : ', TRIM(IF(faculty_id = 99,'',faculty_prefix_th)), TRIM(faculty_name_th) ) as faculty, COUNT( CASE WHEN ( level_id = 0 AND regist = 'course' ) THEN 1 END ) c1, COUNT( CASE WHEN ( level_id = 0 AND regist = 'service' ) THEN 1 END ) c2, COUNT( CASE WHEN ( level_id = 0) THEN 1 END ) c3, COUNT( CASE WHEN ( level_id = 1 AND regist = 'course' ) THEN 1 END ) c4, COUNT( CASE WHEN ( level_id = 1 AND regist = 'service' ) THEN 1 END ) c5, COUNT( CASE WHEN ( level_id = 1) THEN 1 END ) c6, COUNT( CASE WHEN ( level_id = 2 AND regist = 'course' ) THEN 1 END ) c7, COUNT( CASE WHEN ( level_id = 2 AND regist = 'service' ) THEN 1 END ) c8, COUNT( CASE WHEN ( level_id = 2) THEN 1 END ) c9, COUNT( CASE WHEN ( level_id = 3 AND regist = 'course' ) THEN 1 END ) c10, COUNT( CASE WHEN ( level_id = 3 AND regist = 'service' ) THEN 1 END ) c11, COUNT( CASE WHEN ( level_id = 3) THEN 1 END ) c12, COUNT( CASE WHEN ( level_id = 4 AND regist = 'course' ) THEN 1 END ) c13, COUNT( CASE WHEN ( level_id = 4 AND regist = 'service' ) THEN 1 END ) c14, COUNT( CASE WHEN ( level_id = 4) THEN 1 END ) c15, COUNT( CASE WHEN ( level_id = 5 AND regist = 'course' ) THEN 1 END ) c16, COUNT( CASE WHEN ( level_id = 5 AND regist = 'service' ) THEN 1 END ) c17, COUNT( CASE WHEN ( level_id = 5) THEN 1 END ) c18, COUNT(student_id) c19 FROM (SELECT * FROM tbl_faculty WHERE faculty_id != 96) tbl_faculty  LEFT JOIN ( SELECT * FROM ( SELECT student_id, faculty_id, level_id FROM tbl_student WHERE  student_type_id != 2 AND  IFNULL(type_exam_id, 'x') NOT IN ('12997', '12998', '12999')   AND LEFT(student_id,2) LIKE ? ) student JOIN ( SELECT student_id,'course' regist FROM tbl_reg WHERE semester = (SELECT semester FROM app_semester) AND year = (SELECT year FROM app_semester) GROUP BY semester, year, student_id UNION SELECT student_id,'course' regist FROM tbl_reg_out WHERE semester = (SELECT semester FROM app_semester) AND year = (SELECT year FROM app_semester) GROUP BY semester, year, student_id UNION SELECT student_id,'course' regist FROM tbl_reg_grad WHERE semester = (SELECT semester FROM app_semester) AND year = (SELECT year FROM app_semester) GROUP BY semester, year, student_id UNION SELECT student_id,'service' regist FROM tbl_reg_service WHERE semester = (SELECT semester FROM app_semester) AND year = (SELECT year FROM app_semester) GROUP BY semester, year, student_id UNION SELECT student_id,'service' regist FROM tbl_reg_service_out WHERE semester = (SELECT semester FROM app_semester) AND year = (SELECT year FROM app_semester) GROUP BY semester, year, student_id UNION SELECT student_id,'service' regist FROM tbl_reg_service_grad WHERE semester = (SELECT semester FROM app_semester) AND year = (SELECT year FROM app_semester) GROUP BY semester, year, student_id UNION SELECT student_id,'course' regist FROM tbl_reg_yearly WHERE year = (SELECT year FROM app_semester) GROUP BY year, student_id UNION SELECT student_id,'course' regist FROM tbl_reg_yearly_out WHERE year = (SELECT year FROM app_semester) GROUP BY year, student_id UNION SELECT student_id,'course' regist FROM tbl_reg_yearly_grad WHERE year = (SELECT year FROM app_semester) GROUP BY year, student_id UNION SELECT student_id,'service' regist FROM db_regist.tbl_reg_zero WHERE semester = (SELECT semester FROM app_semester) AND year = (SELECT year FROM app_semester) AND paid = 'Y' ) reg USING(student_id) ) main USING(faculty_id) GROUP BY faculty_id",
+    "past": "N",
+    "order": "a"
+}

@@ -1,0 +1,43 @@
+{
+    "header": [
+        {
+            "row": "1",
+            "iterate": 1,
+            "field": [
+                {
+                    "name": "คณะ",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ลำดับ",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ชื่อหลักสูตร",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "รูปแบบ",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "จำนวนนักศึกษา ณ ปัจจุบัน",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "นักศึกษาที่เรียนเกินหลักสูตร",
+                    "rowspan": "1",
+                    "colspan": "1"
+                }
+            ]
+        }
+    ],
+    "query": "SELECT faculty,level,curriculum,curriculum_type,c1,c2 FROM (SELECT CONCAT( faculty_id, ' : ', TRIM( IF(faculty_id = 99,'',faculty_prefix_th) ), TRIM( faculty_name_th ) ) AS faculty, TRIM( level_name_th ) AS LEVEL, TRIM( degree_name_short_th ) AS curriculum, TRIM( curriculum_type_name_th ) AS curriculum_type, faculty_id, level_id, major_id, curriculum_type_id FROM tbl_curriculum JOIN tbl_curriculum_type USING ( curriculum_type_id ) JOIN (SELECT * FROM tbl_faculty WHERE faculty_id != 96) tbl_faculty  USING ( faculty_id ) JOIN tbl_level USING ( level_id ) WHERE faculty_id LIKE ? GROUP BY faculty_id, level_id, major_id, curriculum_type_id) cur LEFT JOIN ( SELECT faculty_id, level_id, major_id, curriculum_type_id, COUNT( student_id ) c1, SUM( CASE WHEN ( ( SELECT YEAR FROM app_semester LIMIT 1 ) - CONCAT('25',LEFT(student_id,2)) ) >= curriculum_year THEN 1 END ) c2 FROM tbl_student JOIN tbl_curriculum USING ( faculty_id, major_id, level_id, curriculum_id ) JOIN tbl_curriculum_type USING ( curriculum_type_id ) WHERE  student_type_id != 2 AND  IFNULL(type_exam_id, 'x') NOT IN ('12997', '12998', '12999')   AND faculty_id LIKE ? GROUP BY faculty_id, level_id, major_id, curriculum_type_id ) main USING ( faculty_id, level_id, major_id, curriculum_type_id )",
+    "past": "N",
+    "order": "ff"
+}

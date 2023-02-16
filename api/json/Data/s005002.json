@@ -1,0 +1,49 @@
+{
+    "header": [
+        {
+            "row": "1",
+            "iterate": 1,
+            "field": [
+                {
+                    "name": "สาขาวิชา (วิทยาเขต)",
+                    "rowspan": "2",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ระดับปริญญาตรี",
+                    "rowspan": "1",
+                    "colspan": "4"
+                }
+            ]
+        },
+        {
+            "row": "2",
+            "iterate": 1,
+            "field": [
+                {
+                    "name": "มีสถานภาพ",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "พ้นสภาพ",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "สำเร็จการศึกษา",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "รวมทั้งหมด",
+                    "rowspan": "1",
+                    "colspan": "1"
+                }
+            ]
+        }
+    ],
+    "query": "SELECT TRIM(type_exam_name_th) name,c1,c2,c3,c4 FROM (SELECT type_exam_name_th,type_exam_id FROM tbl_type_exam WHERE  type_exam_id LIKE '1299%') type_exam LEFT JOIN (SELECT type_exam_id,COUNT( CASE WHEN  status = 'current' THEN 1 END ) c1, COUNT( CASE WHEN  status = 'out' THEN 1 END ) c2, COUNT( CASE WHEN  status = 'grad' THEN 1 END ) c3, COUNT(student_id) c4 FROM ( SELECT student_id, 'current' status,type_exam_id FROM tbl_student WHERE level_id = 1 AND faculty_id = 12 AND type_exam_id LIKE '1299%' AND LEFT(student_id,2) LIKE ? UNION ALL SELECT student_id, 'grad' status,type_exam_id FROM tbl_student_grad WHERE level_id = 1 AND faculty_id = 12 AND type_exam_id LIKE '1299%' AND LEFT(student_id,2) LIKE ? UNION ALL SELECT student_id, 'out' status,type_exam_id FROM tbl_student_out WHERE level_id = 1 AND faculty_id = 12 AND type_exam_id LIKE '1299%' AND LEFT(student_id,2) LIKE ? ) tbl_student GROUP BY type_exam_id ) tbl_student_count USING(type_exam_id) ",
+    "past": "N",
+    "order": "aaa"
+}

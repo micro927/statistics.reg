@@ -1,0 +1,16 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+$indigo: #6155a6;
+$cyan: #3d84a8;
+$primary: $indigo;
+$light: #dee2e6;
+
+$theme-colors: (
+  "primary": $primary,
+  "cyan": $cyan,
+  "light": $light,
+);
+
+@import "bootstrap/scss/bootstrap";

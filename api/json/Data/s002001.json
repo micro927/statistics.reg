@@ -1,0 +1,74 @@
+{
+    "header": [
+        {
+            "row": "1",
+            "iterate": 1,
+            "field": [
+                {
+                    "name": "คณะ",
+                    "rowspan": "2",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ต่ำกว่าปริญญาตรี",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "ปริญญาตรี",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "ประกาศนียบัตรบัณฑิต",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "ปริญญาโท",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "ประกาศนียบัตรบัณฑิตชั้นสูง",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "ปริญญาเอก",
+                    "rowspan": "1",
+                    "colspan": "3"
+                },
+                {
+                    "name": "รวมทั้งหมด",
+                    "rowspan": "1",
+                    "colspan": "3"
+                }
+            ]
+        },
+        {
+            "row": "2",
+            "iterate": 7,
+            "field": [
+                {
+                    "name": "ออกรหัส",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "สละสิทธิ์",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "คงเหลือ",
+                    "rowspan": "1",
+                    "colspan": "1"
+                }
+            ]
+        }
+    ],
+    "query": "SELECT CONCAT(TRIM(IF(faculty_id = 99,'',faculty_prefix_th)), TRIM(faculty_name_th)) faculty, SUM( CASE WHEN level_id = 0 THEN 1 ELSE 0 END ) c1, SUM( CASE WHEN level_id = 0 AND isjoin = 19 THEN 1 ELSE 0 END ) c2, SUM( CASE WHEN level_id = 0 AND isjoin != 19 THEN 1 ELSE 0 END ) c3, SUM( CASE WHEN level_id = 1 THEN 1 ELSE 0 END ) c4, SUM( CASE WHEN level_id = 1 AND isjoin = 19 THEN 1 ELSE 0 END ) c5, SUM( CASE WHEN level_id = 1 AND isjoin != 19 THEN 1 ELSE 0 END ) c6, SUM( CASE WHEN level_id = 2 THEN 1 ELSE 0 END ) c7, SUM( CASE WHEN level_id = 2 AND isjoin = 19 THEN 1 ELSE 0 END ) c8, SUM( CASE WHEN level_id = 2 AND isjoin != 19 THEN 1 ELSE 0 END ) c9, SUM( CASE WHEN level_id = 3 THEN 1 ELSE 0 END ) c10, SUM( CASE WHEN level_id = 3 AND isjoin = 19 THEN 1 ELSE 0 END ) c11, SUM( CASE WHEN level_id = 3 AND isjoin != 19 THEN 1 ELSE 0 END ) c12, SUM( CASE WHEN level_id = 4 THEN 1 ELSE 0 END ) c13, SUM( CASE WHEN level_id = 4 AND isjoin = 19 THEN 1 ELSE 0 END ) c14, SUM( CASE WHEN level_id = 4 AND isjoin != 19 THEN 1 ELSE 0 END ) c15, SUM( CASE WHEN level_id = 5 THEN 1 ELSE 0 END ) c16, SUM( CASE WHEN level_id = 5 AND isjoin = 19 THEN 1 ELSE 0 END ) c17, SUM( CASE WHEN level_id = 5 AND isjoin != 19 THEN 1 ELSE 0 END ) c18, COUNT(student_id) c19, SUM(CASE WHEN isjoin = 19 THEN 1 ELSE 0 END) c20, SUM(CASE WHEN isjoin != 19 THEN 1 ELSE 0 END) c21 FROM (SELECT * FROM tbl_faculty WHERE faculty_id != 96) tbl_faculty  LEFT JOIN ( SELECT 'y' isjoin, student_id, faculty_id, level_id FROM tbl_student WHERE  student_type_id != 2 AND  IFNULL(type_exam_id, 'x') NOT IN ('12997', '12998', '12999')   AND LEFT(student_id,2) LIKE ? UNION ALL SELECT 'y' isjoin, student_id, faculty_id, level_id FROM tbl_student_grad WHERE  student_type_id != 2 AND  IFNULL(type_exam_id, 'x') NOT IN ('12997', '12998', '12999')   AND LEFT(student_id,2) LIKE ? UNION ALL SELECT out_code isjoin, student_id, faculty_id, level_id FROM tbl_student_out WHERE  student_type_id != 2 AND  IFNULL(type_exam_id, 'x') NOT IN ('12997', '12998', '12999')   AND LEFT(student_id,2) LIKE ? ) tbl_student USING(faculty_id) GROUP BY faculty_id",
+    "past": "N",
+    "order": "aaa"
+}

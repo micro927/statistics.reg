@@ -1,0 +1,74 @@
+{
+    "header": [
+        {
+            "row": "1",
+            "iterate": 1,
+            "field": [
+                {
+                    "name": "คณะ",
+                    "rowspan": "2",
+                    "colspan": "1"
+                },
+                {
+                    "name": "นักศึกษาพิการ",
+                    "rowspan": "1",
+                    "colspan": "7"
+                },
+                {
+                    "name": "นักศึกษา 3 จังหวัดชายแดนภาคใต้",
+                    "rowspan": "1",
+                    "colspan": "7"
+                },
+                {
+                    "name": "นักศึกษาโครงการการรับนักเรียนชาวไทยภูเขา",
+                    "rowspan": "1",
+                    "colspan": "7"
+                }
+            ]
+        },
+        {
+            "row": "2",
+            "iterate": 3,
+            "field": [
+                {
+                    "name": "ต่ำกว่าปริญญาตรี",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ปริญญาตรี",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ป.บัณฑิต",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ปริญญาโท",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ป.บัณฑิตชั้นสูง",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "ปริญญาเอก",
+                    "rowspan": "1",
+                    "colspan": "1"
+                },
+                {
+                    "name": "รวมทั้งหมด",
+                    "rowspan": "1",
+                    "colspan": "1"
+                }
+            ]
+        }
+    ],
+    "query": "SELECT CONCAT( faculty_id, ' : ', TRIM(IF(faculty_id = 99, '', faculty_prefix_th)), TRIM(faculty_name_th) ) as faculty, COUNT( CASE WHEN ( level_id = 0 AND deformity_id > 0 ) THEN 1 END ) c1, COUNT( CASE WHEN ( level_id = 1 AND deformity_id > 0 ) THEN 1 END ) c2, COUNT( CASE WHEN ( level_id = 2 AND deformity_id > 0 ) THEN 1 END ) c3, COUNT( CASE WHEN ( level_id = 3 AND deformity_id > 0 ) THEN 1 END ) c4, COUNT( CASE WHEN ( level_id = 4 AND deformity_id > 0 ) THEN 1 END ) c5, COUNT( CASE WHEN ( level_id = 5 AND deformity_id > 0 ) THEN 1 END ) c6, COUNT( CASE WHEN (deformity_id > 0) THEN 1 END ) c7, COUNT( CASE WHEN ( level_id = 0 AND std_province_id IN (94, 95, 96) ) THEN 1 END ) c8, COUNT( CASE WHEN ( level_id = 1 AND std_province_id IN (94, 95, 96) ) THEN 1 END ) c9, COUNT( CASE WHEN ( level_id = 2 AND std_province_id IN (94, 95, 96) ) THEN 1 END ) c10, COUNT( CASE WHEN ( level_id = 3 AND std_province_id IN (94, 95, 96) ) THEN 1 END ) c11, COUNT( CASE WHEN ( level_id = 4 AND std_province_id IN (94, 95, 96) ) THEN 1 END ) c12, COUNT( CASE WHEN ( level_id = 5 AND std_province_id IN (94, 95, 96) ) THEN 1 END ) c13, COUNT( CASE WHEN (std_province_id IN (94, 95, 96)) THEN 1 END ) c14, COUNT( CASE WHEN ( level_id = 0 AND type_exam_id = 3 ) THEN 1 END ) c15, COUNT( CASE WHEN ( level_id = 1 AND type_exam_id = 3 ) THEN 1 END ) c16, COUNT( CASE WHEN ( level_id = 2 AND type_exam_id = 3 ) THEN 1 END ) c17, COUNT( CASE WHEN ( level_id = 3 AND type_exam_id = 3 ) THEN 1 END ) c18, COUNT( CASE WHEN ( level_id = 4 AND type_exam_id = 3 ) THEN 1 END ) c19, COUNT( CASE WHEN ( level_id = 5 AND type_exam_id = 3 ) THEN 1 END ) c20, COUNT( CASE WHEN (type_exam_id = 3) THEN 1 END ) c21 FROM ( SELECT * FROM tbl_student JOIN tbl_student_addr USING(student_id) ) tbl_student JOIN ( SELECT * FROM tbl_faculty WHERE faculty_id != 96 ) tbl_faculty USING(faculty_id) WHERE LEFT(student_id, 2) LIKE ? AND student_type_id != 2 AND IFNULL(type_exam_id, 'x') NOT IN ('12997', '12998', '12999') GROUP BY faculty_id",
+    "past": "N",
+    "order": "a"
+}
